@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0077)http://media.pearsoncmg.com/aw/aw_kurose_network_3/labs/lab7/VideoStream.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd"><!-- saved from url=(0072)http://media.pearsoncmg.com/aw/aw_kurose_network_2/labs/VideoStream.html --><HTML><HEAD><META 
+content="IE=11.0000" http-equiv="X-UA-Compatible">
+<TITLE>VideoStream.java</TITLE> 
+<META http-equiv="Content-Type" content="text/html; charset=windows-1252"> 
+<STYLE type="text/css">H1 {
+	FONT-WEIGHT: normal; FONT-SIZE: 19pt; COLOR: #A77C46; FONT-FAMILY: Arial, sans-serif
+}
+H2 {
+	FONT-WEIGHT: bold; FONT-SIZE: 16pt; COLOR: #A77C46; FONT-FAMILY: Arial, sans-serif
+}
+H3 {
+	FONT-WEIGHT: bold; FONT-SIZE: 14pt; COLOR: #A77C46; FONT-FAMILY: Arial, sans-serif
+}
+P {
+	FONT-SIZE: 10pt; FONT-FAMILY: Arial, sans-serif
+}
+TD {
+	FONT-SIZE: 10pt; FONT-FAMILY: Arial, sans-serif
+}
+TH {
+	FONT-SIZE: 10pt; FONT-FAMILY: Arial, sans-serif
+}
+DT {
+	FONT-SIZE: 10pt; FONT-FAMILY: Arial, sans-serif
+}
+DD {
+	FONT-SIZE: 10pt; FONT-FAMILY: Arial, sans-serif
+}
+LI {
+	FONT-SIZE: 10pt; FONT-FAMILY: Arial, sans-serif
+}
+A:link {
+	COLOR: #000066
+}
+A:visited {
+	COLOR: #666666
+}
+</STYLE>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.9600.17631"></HEAD> 
+<BODY>
+<H3><A name="videostream">VideoStream.java</A></H3>
+<PRE>//VideoStream
+
+import java.io.*;
+
+public class VideoStream {
+
+  FileInputStream fis; //video file
+  int frame_nb; //current frame nb
+
+  //-----------------------------------
+  //constructor
+  //-----------------------------------
+  public VideoStream(String filename) throws Exception{
+
+    //init variables
+    fis = new FileInputStream(filename);
+    frame_nb = 0;
+  }
+
+  //-----------------------------------
+  // getnextframe
+  //returns the next frame as an array of byte and the size of the frame
+  //-----------------------------------
+  public int getnextframe(byte[] frame) throws Exception
+  {
+    int length = 0;
+    String length_string;
+    byte[] frame_length = new byte[5];
+
+    //read current frame length
+    fis.read(frame_length,0,5);
+	
+    //transform frame_length to integer
+    length_string = new String(frame_length);
+    length = Integer.parseInt(length_string);
+	
+    return(fis.read(frame,0,length));
+  }
+}
+</PRE></BODY></HTML>
